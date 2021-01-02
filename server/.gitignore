@@ -1,0 +1,11 @@
+# NODE MODULES
+/node_modules
+
+
+# ENV
+.env
+
+
+# OTHER
+.DS_Store
+/dist
