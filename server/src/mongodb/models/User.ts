@@ -1,14 +1,21 @@
 import * as mongoose from 'mongoose';
 import  { Schema, Document, Model } from 'mongoose'
 
-interface IUser extends Document {
+export interface IUser extends Document {
     username: String,
     password: String,
+    email: String,
+    tokenVersion: Number
 }
 
 const schema = new Schema({
     username: String,
     password: String,
+    email: String,
+    tokenVersion: {
+        type: Number,
+        default: 0
+    }
 })
 
 

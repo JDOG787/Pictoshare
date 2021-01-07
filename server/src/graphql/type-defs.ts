@@ -2,19 +2,13 @@ import { gql } from "apollo-server";
 
 export default gql`
     type User {
-        username: String
-        password: String
-        _id: ID
-    }
-
-    type AuthData {
-        token: String!
-        userId: ID!
+        username: String!
+        _id: ID!
     }
         
     type Query {
         users: [User]
-        userById(id: ID): User
+        login(loginData: LoginData): AuthData
     }
 
     type Mutation {
@@ -23,6 +17,17 @@ export default gql`
 
     input UserInfo {
         username: String!
+        email: String!
         password: String!
+    }
+
+    input LoginData {
+        email: String!
+        password: String!
+    }
+
+    type AuthData {
+        userId: ID!
+        accessToken: String!
     }
 `;
