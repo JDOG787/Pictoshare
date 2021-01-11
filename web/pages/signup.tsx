@@ -1,72 +1,87 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { gql, useMutation } from '@apollo/client'
+import { useSignupMutation } from '../components/generated/graphql';
+import React from 'react';
+import Layout from '../components/Layout';
 
-export default function Signup() {
+interface Props {}
+
+const Signup: React.FC<Props> = () => {
   const [form, setForm] = useState({
     username: "",
     email: "",
     password: ""
   });
+  const [signup] = useSignupMutation()
   
 
-
-
-  function onSubmit(e) {
+  async function onSubmit(e: Event) {
     e.preventDefault()
+    const res = await signup({
+      variables: {
+        userInfo: {
+          username: form.username,
+          email: form.email,
+          password: form.password
+        }
+      }
+    })
+    console.log(res)
   }
 
-
-
   return (
-      <div>
-      <h1>Signup!</h1>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <input 
-        onChange={(e) => {
-          setForm({
-            username: e.target.value,
-            email: form.email,
-            password: form.password
-          })
-        }}
-        type="text" 
-        value={form.username}
-        placeholder="Username" 
-        required
-        />
+      <Layout>
+        <div>
+        <h1>Signup!</h1>
+        <form onSubmit={(e) => onSubmit(e)}>
+          <input 
+          onChange={(e) => {
+            setForm({
+              username: e.target.value,
+              email: form.email,
+              password: form.password
+            })
+          }}
+          type="text" 
+          value={form.username}
+          placeholder="Username" 
+          required
+          />
 
-        <input 
-        onChange={(e) => {
-          setForm({
-            username: form.username,
-            email: e.target.value,
-            password: form.password
-          })
-        }}
-        type="email" 
-        placeholder="Email" 
-        value={form.email}
-        required
-        />
+          <input 
+          onChange={(e) => {
+            setForm({
+              username: form.username,
+              email: e.target.value,
+              password: form.password
+            })
+          }}
+          type="email" 
+          placeholder="Email" 
+          value={form.email}
+          required
+          />
 
-        <input 
-        onChange={(e) => {
-          setForm({
-            username: form.username,
-            email: form.email,
-            password: e.target.value
-          })
-        }}
-        type="password" 
-        placeholder="Password" 
-        value={form.password}
-        required
-        />
+          <input 
+          onChange={(e) => {
+            setForm({
+              username: form.username,
+              email: form.email,
+              password: e.target.value
+            })
+          }}
+          type="password" 
+          placeholder="Password" 
+          value={form.password}
+          required
+          />
 
-        <Link href="/"><a>Already have an account?</a></Link>
-        <button>Signup</button>
-      </form>
-    </div>
+          <Link href="/"><a>Already have an account?</a></Link>
+          <button>Signup</button>
+        </form>
+      </div>
+    </Layout>
   )
 }
+
+export default Signup;

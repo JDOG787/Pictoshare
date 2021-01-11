@@ -1,9 +1,12 @@
 import { AppProps } from 'next/app';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import '../styles/global.css';
+
 
 const client = new ApolloClient({
   uri: 'http://localhost:8080/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  credentials: "include"
 });
 
 function App({ Component, pageProps }: AppProps) {

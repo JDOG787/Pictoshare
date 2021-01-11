@@ -8,11 +8,13 @@ export default gql`
         
     type Query {
         users: [User]
-        login(loginData: LoginData): AuthData
+        currentUser: User
+        logout: String!
     }
 
     type Mutation {
         createUser(userInfo: UserInfo): AuthData
+        login(loginData: LoginData): AuthData
     }
 
     input UserInfo {

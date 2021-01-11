@@ -5,7 +5,7 @@ export interface IUser extends Document {
     username: String,
     password: String,
     email: String,
-    tokenVersion: Number
+    tokenVersion?: Number
 }
 
 const schema = new Schema({

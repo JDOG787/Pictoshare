@@ -1,0 +1,6 @@
+mutation signup($userInfo: UserInfo!) {
+    createUser(userInfo: $userInfo) {
+        accessToken
+        userId
+    }
+}

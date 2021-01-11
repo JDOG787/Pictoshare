@@ -10,6 +10,7 @@ import { verify } from 'jsonwebtoken'
 import User from "./mongodb/models/User";
 import { createAccessToken, createRefreshToken } from "./auth";
 import { sendRefreshToken } from "./sendRefreshToken";
+import * as cors from 'cors'
 
 
 async function main() {
@@ -21,9 +22,13 @@ async function main() {
   });
   await config.connect()
   
+  app.use(cors({
+    credentials: true,
+    origin: "http://localhost:3000"
+  }))
   app.use(cookieParser())
   app.use(isAuth)
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, cors: false });
   app.post("/refresh_token", async (req, res) => {
     const token: string = req.cookies.jid;
 
