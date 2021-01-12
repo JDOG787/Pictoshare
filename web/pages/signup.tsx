@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useSignupMutation } from '../components/generated/graphql';
 import React from 'react';
 import Layout from '../components/Layout';
+import styles from '../styles/Auth.module.css';
 
 interface Props {}
 
@@ -30,57 +31,77 @@ const Signup: React.FC<Props> = () => {
   }
 
   return (
-      <Layout>
-        <div>
-        <h1>Signup!</h1>
+    <Layout>
+    <div className={styles.signup}>
+      <img className={styles.logo} src="/images/pictoshare-logo.png"/>
+      <div className={styles.signupCard}>
+        <h1 className={styles.header}>Signup!</h1>
         <form onSubmit={(e) => onSubmit(e)}>
-          <input 
-          onChange={(e) => {
-            setForm({
-              username: e.target.value,
-              email: form.email,
-              password: form.password
-            })
-          }}
-          type="text" 
-          value={form.username}
-          placeholder="Username" 
-          required
-          />
+        <div className={styles.feild}>
+            <label className={styles.label} htmlFor="usernmae">Username</label>
+            <br/>
+            <input 
+            className={styles.textbox}
+            onChange={(e) => {
+              setForm({
+                username: e.target.value,
+                email: form.email,
+                password: form.password
+              })
+            }}
+            type="text" 
+            id="username"
+            value={form.username}
+            required/>
+          </div>
 
-          <input 
-          onChange={(e) => {
-            setForm({
-              username: form.username,
-              email: e.target.value,
-              password: form.password
-            })
-          }}
-          type="email" 
-          placeholder="Email" 
-          value={form.email}
-          required
-          />
+          <div className={styles.feild}>
+            <label className={styles.label} htmlFor="email">Email</label>
+            <br/>
+            <input 
+            className={styles.textbox}
+            onChange={(e) => {
+              setForm({
+                username: form.username,
+                email: e.target.value,
+                password: form.password
+              })
+            }}
+            type="email" 
+            id="email"
+            value={form.email}
+            required/>
+          </div>
 
-          <input 
-          onChange={(e) => {
-            setForm({
-              username: form.username,
-              email: form.email,
-              password: e.target.value
-            })
-          }}
-          type="password" 
-          placeholder="Password" 
-          value={form.password}
-          required
-          />
-
-          <Link href="/"><a>Already have an account?</a></Link>
-          <button>Signup</button>
+          <div className={styles.feild}>
+            <label className={styles.label} htmlFor="password">Password</label>
+            <br/>
+            <input 
+            className={styles.textbox}
+            onChange={(e) => {
+              setForm({
+                username: form.username,
+                email: form.email,
+                password: e.target.value
+              })
+            }}
+            type="password" 
+            id="password"
+            value={form.password}
+            required/>
+          </div>
+          <div className={styles.switchPage}>
+            <p>Already have an account?</p>
+            <Link href="/"><a>Login</a></Link>
+          </div>
+          <br/>
+          <div className={styles.btnContainer}>
+            <button className={styles.btn}>Login</button>
+          </div>
         </form>
       </div>
-    </Layout>
+    </div>
+  </Layout>
   )
 }
 

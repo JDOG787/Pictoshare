@@ -1,7 +1,9 @@
+import { scrypt } from 'crypto';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useLoginMutation } from '../components/generated/graphql';
 import Layout from '../components/Layout';
+import styles from '../styles/Auth.module.css';
 
 interface Props {}
 
@@ -28,14 +30,16 @@ const Login: React.FC<Props> = () => {
 
   return (
     <Layout>
-      <div className="login">
-        <div className="login-card">
-          <h1>Login!</h1>
+      <div className={styles.login}>
+        <img className={styles.logo} src="/images/pictoshare-logo.png"/>
+        <div className={styles.loginCard}>
+          <h1 className={styles.header}>Login!</h1>
           <form onSubmit={(e) => onSubmit(e)}>
-            <div className="feild">
-              <label htmlFor="email">Email</label>
+            <div className={styles.feild}>
+              <label className={styles.label} htmlFor="email">Email</label>
               <br/>
               <input 
+              className={styles.textbox}
               onChange={(e) => {
                 setFormData({
                   email: e.target.value,
@@ -48,10 +52,11 @@ const Login: React.FC<Props> = () => {
               required/>
             </div>
 
-            <div className="feild">
-              <label htmlFor="password">Password</label>
+            <div className={styles.feild}>
+              <label className={styles.label} htmlFor="password">Password</label>
               <br/>
               <input 
+              className={styles.textbox}
               onChange={(e) => {
                 setFormData({
                   email: form.email,
@@ -63,8 +68,14 @@ const Login: React.FC<Props> = () => {
               value={form.password}
               required/>
             </div>
-            <Link href="/signup"><a>Don't have an account?</a></Link>
-            <button>Login</button>
+            <div className={styles.switchPage}>
+              <p>Don't have an account?</p>
+              <Link href="/signup"><a>Create one</a></Link>
+            </div>
+            <br/>
+            <div className={styles.btnContainer}>
+              <button className={styles.btn}>Login</button>
+            </div>
           </form>
         </div>
       </div>

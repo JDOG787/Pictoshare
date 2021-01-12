@@ -1,0 +1,76 @@
+.login, .signup {
+    height: 100vh;
+    background-image: url("/images/Login-background.png");
+    background-repeat: no-repeat;
+}
+
+.logo {
+    height: 100px;
+    margin: 20px;
+    height: 80px;
+}
+
+.loginCard, .signupCard  {
+    width: 300px;
+    padding: 20px;
+    background: #FFFFFF;
+    box-shadow: 4px 4px 15px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    position: absolute;
+    left: 813px;
+    top: 100px;
+}
+
+.loginCard {
+    height: 441px;
+}
+
+.signupCard {
+    height: 500px;
+}
+
+.header {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 45px;
+    line-height: 73px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.feild {
+    width: 200px;
+    margin: 20px auto;
+}
+
+.label {
+    font-size: 20px;
+}
+
+.textbox {
+    width: 200px;
+    height: 40px;
+
+    background: #FFFFFF;
+    border: 2px solid #DDDDDD;
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.switchPage, .btnContainer  {
+    text-align: center;
+}
+
+.btn {
+    width: 120px;
+    height: 40px;
+    background: linear-gradient(264.51deg, #17C2F8 6.48%, #3268F4 91.95%);
+    border-radius: 8px;
+    color: white;
+    font-size: 25px;
+    border: none;
+    margin-top: 20px;
+}
