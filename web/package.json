@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
-    "date-fns": "^2.11.1",
     "graphql": "^15.4.0",
     "gray-matter": "^4.0.2",
     "next": "^10.0.0",

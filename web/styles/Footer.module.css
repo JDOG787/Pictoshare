@@ -1,0 +1,21 @@
+.Footer {
+    padding: 20px;
+    text-align: center;
+}
+
+.links, .copyRight {
+    color: #8F8F8F;
+}
+
+.copyRight {
+    margin-top: 10px;
+}
+
+.link {
+    color: #8F8F8F;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

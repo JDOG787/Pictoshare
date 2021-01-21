@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { loadGetInitialProps } from 'next/dist/next-server/lib/utils';
+import Footer from '../components/Footer';
 
 interface Props {
     children: React.ReactNode
@@ -14,6 +14,7 @@ const Layout: React.FC<Props> = (props) => {
                 <title>Pictoshare</title>
             </Head> 
             {props.children}
+            <Footer/>
         </div>
     )
 }

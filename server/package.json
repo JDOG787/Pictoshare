@@ -12,11 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
-    "@types/cookie-parser": "^1.4.2",
-    "@types/cors": "^2.8.9",
     "@types/dotenv": "^8.2.0",
-    "@types/express-jwt": "^6.0.0",
-    "@types/jsonwebtoken": "^8.5.0",
+    "@types/express-session": "^1.17.3",
     "@types/node": "^14.14.14",
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.6"
@@ -24,11 +21,8 @@
   "dependencies": {
     "apollo-server": "^2.19.0",
     "bcrypt": "^5.0.0",
-    "cookie-parser": "^1.4.5",
-    "cors": "^2.8.5",
-    "express-jwt": "^6.0.0",
+    "express-session": "^1.17.1",
     "graphql": "^15.4.0",
-    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.8"
   }
 }

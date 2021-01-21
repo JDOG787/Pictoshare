@@ -31,8 +31,8 @@ export type Query = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createUser?: Maybe<AuthData>;
-  login?: Maybe<AuthData>;
+  createUser?: Maybe<Scalars['Boolean']>;
+  login?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -56,12 +56,6 @@ export type LoginData = {
   password: Scalars['String'];
 };
 
-export type AuthData = {
-  __typename?: 'AuthData';
-  userId: Scalars['ID'];
-  accessToken: Scalars['String'];
-};
-
 export enum CacheControlScope {
   Public = 'PUBLIC',
   Private = 'PRIVATE'
@@ -75,10 +69,7 @@ export type SignupMutationVariables = Exact<{
 
 export type SignupMutation = (
   { __typename?: 'Mutation' }
-  & { createUser?: Maybe<(
-    { __typename?: 'AuthData' }
-    & Pick<AuthData, 'accessToken' | 'userId'>
-  )> }
+  & Pick<Mutation, 'createUser'>
 );
 
 export type LoginMutationVariables = Exact<{
@@ -88,10 +79,7 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = (
   { __typename?: 'Mutation' }
-  & { login?: Maybe<(
-    { __typename?: 'AuthData' }
-    & Pick<AuthData, 'accessToken' | 'userId'>
-  )> }
+  & Pick<Mutation, 'login'>
 );
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
@@ -101,17 +89,14 @@ export type UsersQuery = (
   { __typename?: 'Query' }
   & { users?: Maybe<Array<Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'username'>
+    & Pick<User, 'username' | '_id'>
   )>>> }
 );
 
 
 export const SignupDocument = gql`
     mutation signup($userInfo: UserInfo!) {
-  createUser(userInfo: $userInfo) {
-    accessToken
-    userId
-  }
+  createUser(userInfo: $userInfo)
 }
     `;
 export type SignupMutationFn = Apollo.MutationFunction<SignupMutation, SignupMutationVariables>;
@@ -141,10 +126,7 @@ export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
 export const LoginDocument = gql`
     mutation login($loginData: LoginData!) {
-  login(loginData: $loginData) {
-    accessToken
-    userId
-  }
+  login(loginData: $loginData)
 }
     `;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
@@ -176,6 +158,7 @@ export const UsersDocument = gql`
     query users {
   users {
     username
+    _id
   }
 }
     `;

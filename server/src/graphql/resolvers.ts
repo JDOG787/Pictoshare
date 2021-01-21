@@ -1,6 +1,4 @@
 import User from '../mongodb/models/User';
-import { createAccessToken, createRefreshToken } from '../auth';
-import { sendRefreshToken } from '../sendRefreshToken';
 import { Context } from '../types/context';
 import { compare, hash } from 'bcrypt';
 
@@ -17,25 +15,29 @@ interface LoginData {
 
 export default {
     Query: {
-        users: async () => {
+        users: async (p, a, { req }: Context) => {
+            console.log(req.payload)
+            if (!req.isAuth) {
+                return null;
+            }
             return await User.find()
         },
 
         currentUser: async (_, args, { req }: Context) => {
-            if (!req.isAuth) {
-                return null;
-            }
+            // if (!req.isAuth) {
+            //     return null;
+            // }
 
-            try {
-                const user = await User.findById(req.payload.userId);
-                return user;
-            } catch {
-                return null;
-            }
+            // try {
+            //     const user = await User.findById(req.payload.userId);
+            //     return user;
+            // } catch {
+            //     return null;
+            // }
         },
 
-        logout: (parent, args, { res }: Context) => {
-            sendRefreshToken(res, "");
+        logout: (parent, args, { req }: Context) => {
+            req.logout();
 
             return "Logged out"
         }
@@ -55,32 +57,26 @@ export default {
             const hashedPassword = await hash(userInfo.password, 12);
             const user = await User.create({username: userInfo.username, email: userInfo.email, password: hashedPassword});
 
-            sendRefreshToken(res, createRefreshToken(user))
+            req.session.userId = user._id;
 
-            return { 
-                accessToken: createAccessToken(user), 
-                userId: user._id 
-            }
+
+            return true
         },
 
-        login: async (_, { loginData }: { loginData: LoginData }, { res }: Context) => {
+        login: async (_, { loginData }: { loginData: LoginData }, { req }: Context) => {
             const foundUserByEmail = await User.findOne({ email: loginData.email });
             if (foundUserByEmail === null) {
                 throw new Error("There isnt an account registered with this email");
             }
 
             const valid = await compare(loginData.password, foundUserByEmail.password as string)
-            console.log(valid)
             if (!valid) {
                 throw new Error("Incorrect password")
             }
 
-            sendRefreshToken(res, createRefreshToken(foundUserByEmail))
+            req.session.userId = foundUserByEmail._id;
 
-            return { 
-                accessToken: createAccessToken(foundUserByEmail), 
-                userId: foundUserByEmail._id 
-            }
+            return true
         },
     }
 }

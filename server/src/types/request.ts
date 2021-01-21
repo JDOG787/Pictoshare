@@ -1,7 +1,7 @@
 import { Request } from 'express';
-import { Payload } from './payload'
+import Session  from './session';
 
 export interface AuthRequest extends Request {
     isAuth?: boolean,
-    payload?: Payload
+    session: Session
 }

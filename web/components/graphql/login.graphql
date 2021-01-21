@@ -1,6 +1,3 @@
 mutation login($loginData: LoginData!) {
-    login(loginData: $loginData) {
-        accessToken
-        userId
-    }
+    login(loginData: $loginData) 
 }

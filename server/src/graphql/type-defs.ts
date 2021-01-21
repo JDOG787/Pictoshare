@@ -13,8 +13,8 @@ export default gql`
     }
 
     type Mutation {
-        createUser(userInfo: UserInfo): AuthData
-        login(loginData: LoginData): AuthData
+        createUser(userInfo: UserInfo): Boolean
+        login(loginData: LoginData): Boolean
     }
 
     input UserInfo {
@@ -26,10 +26,5 @@ export default gql`
     input LoginData {
         email: String!
         password: String!
-    }
-
-    type AuthData {
-        userId: ID!
-        accessToken: String!
     }
 `;

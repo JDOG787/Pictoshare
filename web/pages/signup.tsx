@@ -13,7 +13,7 @@ const Signup: React.FC<Props> = () => {
     email: "",
     password: ""
   });
-  const [signup] = useSignupMutation()
+  const [signup] = useSignupMutation();
   
 
   async function onSubmit(e: Event) {
@@ -27,7 +27,7 @@ const Signup: React.FC<Props> = () => {
         }
       }
     })
-    console.log(res)
+    console.log(res.data.createUser)
   }
 
   return (

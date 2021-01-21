@@ -1,9 +1,9 @@
-import { scrypt } from 'crypto';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useLoginMutation } from '../components/generated/graphql';
 import Layout from '../components/Layout';
 import styles from '../styles/Auth.module.css';
+import {useRouter} from 'next/router';
 
 interface Props {}
 
@@ -12,7 +12,8 @@ const Login: React.FC<Props> = () => {
     email: "",
     password: ""
   });
-  const [login] = useLoginMutation()
+  const [login] = useLoginMutation();
+  const router = useRouter();
 
 
   async function onSubmit(e: Event) {
@@ -26,6 +27,7 @@ const Login: React.FC<Props> = () => {
       }
     })
     console.log(res)
+    router.push("/users");
   }
 
   return (
