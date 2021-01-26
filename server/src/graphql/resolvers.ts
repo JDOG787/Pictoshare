@@ -1,6 +1,7 @@
 import User from '../mongodb/models/User';
 import { Context } from '../types/context';
 import { compare, hash } from 'bcrypt';
+import Post from '../mongodb/models/Post';
 
 interface UserInfo {
     username: String,
@@ -16,7 +17,6 @@ interface LoginData {
 export default {
     Query: {
         users: async (p, a, { req }: Context) => {
-            console.log(req.payload)
             if (!req.isAuth) {
                 return null;
             }
@@ -24,23 +24,23 @@ export default {
         },
 
         currentUser: async (_, args, { req }: Context) => {
-            // if (!req.isAuth) {
-            //     return null;
-            // }
+            if (!req.session.userId) {
+                return null;
+            }
 
-            // try {
-            //     const user = await User.findById(req.payload.userId);
-            //     return user;
-            // } catch {
-            //     return null;
-            // }
+            try {
+                const user = await User.findById(req.session.userId);
+                return user;
+            } catch {
+                return null;
+            }
         },
 
-        logout: (parent, args, { req }: Context) => {
-            req.logout();
+        // logout: (parent, args, { req }: Context) => {
+        //     // req.logout();
 
-            return "Logged out"
-        }
+        //     return "Logged out"
+        // }
     },
 
     Mutation: {
@@ -78,5 +78,24 @@ export default {
 
             return true
         },
+
+        createPost: async (_, { body }: { body: String }, { req }: Context) => {
+            if (!req.session.userId) {
+                throw new Error("Unauthenticated")
+            }
+
+            const foundUser = User.findById(req.session.userId);
+
+            const postData = {
+                body,
+                author: {
+                    username: foundUser.username,
+                    userId: req.session.userId
+                }
+            }
+            await Post.create(postData);
+
+            return true;
+        }
     }
 }

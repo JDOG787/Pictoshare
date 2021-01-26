@@ -31,7 +31,7 @@ const Login: React.FC<Props> = () => {
   }
 
   return (
-    <Layout>
+    <Layout showNav={false}>
       <div className={styles.login}>
         <img className={styles.logo} src="/images/pictoshare-logo.png"/>
         <div className={styles.loginCard}>

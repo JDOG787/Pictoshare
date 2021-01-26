@@ -13,8 +13,9 @@ export default gql`
     }
 
     type Mutation {
-        createUser(userInfo: UserInfo): Boolean
-        login(loginData: LoginData): Boolean
+        createUser(userInfo: UserInfo!): Boolean
+        login(loginData: LoginData!): Boolean
+        createPost(body: String!): Boolean
     }
 
     input UserInfo {

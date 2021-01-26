@@ -1,7 +1,7 @@
 ![logo](https://github.com/JDOG787/Pictoshare/blob/master/web/public/images/pictoshare-logo-dark.png?raw=true)
 
 # Pictoshare
-A simple social media app using React and Graphql
+A simple social media app using React and Graphql. Kinda like instagram except it doesnt spy on you :-D
 
 ## Stack 
 - Mongodb
@@ -11,5 +11,10 @@ A simple social media app using React and Graphql
 - Graphql
 - Next.js
 - Apollo
+
+# Why?
+
+good question \0/
+
 
 More info later

@@ -1,0 +1,137 @@
+.navbar {
+    width: 100vw;
+
+    background: #FFFFFF;
+    box-shadow: 0px 6px 10px 1px rgba(0, 0, 0, 0.25);
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+}
+
+.logoIcon {
+    height: 70px;
+}
+
+
+.navLink {
+    font-size: 20px;
+    margin-left: 20px;
+    text-decoration: none;
+    color: #000;
+}
+
+.postBtn {  
+    padding: 7px 25px;
+    background: linear-gradient(264.51deg, #17C2F8 6.48%, #3268F4 91.95%);
+    border-radius: 8px;
+}
+
+.postLink {
+    text-decoration: none;
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+
+/* 
+    =========
+    Search bar
+    ==========
+*/
+
+.searchBar {
+    background: #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 8px;
+    display: inline-block;
+    width: 250px;
+    height: 50px;
+    display: flex;
+    padding: 10px;
+    margin-left: 30px;
+}
+
+.searchBar:hover {
+    border: 2px solid #DDDDDD;
+}
+
+.searchBar:hover > input {
+    width: 100%;
+    padding: 7px;
+    margin-right: 7px;
+}
+
+.searchBar > input {
+    border: none;
+    outline: none;
+    font-size: 21px;
+    background-color: transparent;
+    width: 0;
+    transition: .4s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchBar >  button {
+    margin-right: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: none;
+    background: #fff;
+    outline: none;
+}
+
+.searchBar >  button > i {
+    transform: scale(1.5);
+}
+
+/* 
+=============
+Notification
+=============
+*/
+
+.notifications {
+    margin-left: 20px;
+}
+
+.notiLink {
+    color: #000;
+}
+
+.userIcon {
+    border-radius: 50%;
+    background-color: #fff;
+    border: #ddd solid 2px;
+    width: 60px;
+    height: 60px;
+    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userIcon i {
+    transform: scale(2);
+}
