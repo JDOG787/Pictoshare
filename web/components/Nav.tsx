@@ -24,7 +24,7 @@ const Nav: React.FC = () => {
                 </div>
                 <div className={styles.right}>
                     <div className={styles.postBtn}>
-                        <Link href="#">
+                        <Link href="/posts/new">
                             <a className={styles.postLink}>Post</a>
                         </Link>
                     </div>

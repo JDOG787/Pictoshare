@@ -1,0 +1,42 @@
+.newPost {
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    font-size: 2.6rem;
+}
+
+.form {
+    width: 50vw;
+    margin: 40px auto;
+}
+
+.field {
+    margin-bottom: 20px;
+}
+
+.label {
+    font-size: 1.7rem;
+}
+
+.postBody {
+    width: 100%;
+    resize: none;
+    height: 100px;
+    border: 2px #ddd solid;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    padding: 10px;
+    outline: none;
+}
+
+.btn {
+    padding: 7px 25px;
+    background: linear-gradient(264.51deg, #17C2F8 6.48%, #3268F4 91.95%);
+    border-radius: 8px;
+    border: none;
+    color: white;
+    font-size: 1.3rem;
+    outline: none;
+}
