@@ -4,17 +4,16 @@ import  { Schema, Document, Model } from 'mongoose'
 export interface IPost extends Document {
     body: string,
     author: {
-        username: string,
-        userId: string
-    },
-    // created: Date
+        userId: string,
+        username: string
+    }
 }
 
 const schema = new Schema({
     body: String,
     author: {
-        username: String,
-        userId: String
+        userId: String,
+        username: String
     },
     created: {
         type: Date,

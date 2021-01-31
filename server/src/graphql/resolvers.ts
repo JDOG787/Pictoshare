@@ -1,7 +1,8 @@
-import User from '../mongodb/models/User';
+import User, { IUser } from '../mongodb/models/User';
 import { Context } from '../types/context';
 import { compare, hash } from 'bcrypt';
-import Post from '../mongodb/models/Post';
+import Post, {IPost} from '../mongodb/models/Post';
+import { Query } from 'mongoose';
 
 interface UserInfo {
     username: String,
@@ -36,11 +37,21 @@ export default {
             }
         },
 
-        // logout: (parent, args, { req }: Context) => {
-        //     // req.logout();
+        feed: async (_, __, { req }: Context) => {
+            if (!req.isAuth) {
+                throw new Error("Unauthenticated");
+            }
 
-        //     return "Logged out"
-        // }
+            const posts = await Post.find({});
+
+            return posts;
+        },
+
+        userById: (_, { id }) => {
+            const foundUser = User.findById(id);
+
+            return foundUser;
+        }
     },
 
     Mutation: {
@@ -58,6 +69,7 @@ export default {
             const user = await User.create({username: userInfo.username, email: userInfo.email, password: hashedPassword});
 
             req.session.userId = user._id;
+            req.session.username = user.username as string;
 
 
             return true
@@ -75,24 +87,24 @@ export default {
             }
 
             req.session.userId = foundUserByEmail._id;
+            req.session.username = foundUserByEmail.username as string;
 
             return true
         },
 
-        createPost: async (_, { body }: { body: String }, { req }: Context) => {
-            if (!req.session.userId) {
+        createPost: async (_, { body }: { body: string }, { req }: Context) => {
+            if (!req.isAuth) {
                 throw new Error("Unauthenticated")
             }
-
-            const foundUser = User.findById(req.session.userId);
 
             const postData = {
                 body,
                 author: {
-                    username: foundUser.username,
-                    userId: req.session.userId
+                    userId: req.user?.userId,
+                    username: req.user?.username
                 }
             }
+
             await Post.create(postData);
 
             return true;

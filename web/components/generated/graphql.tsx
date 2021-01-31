@@ -22,27 +22,52 @@ export type User = {
   _id: Scalars['ID'];
 };
 
+export type Author = {
+  __typename?: 'Author';
+  userId: Scalars['String'];
+  username: Scalars['String'];
+};
+
+export type Post = {
+  __typename?: 'Post';
+  body: Scalars['String'];
+  author: Author;
+};
+
 export type Query = {
   __typename?: 'Query';
   users?: Maybe<Array<Maybe<User>>>;
   currentUser?: Maybe<User>;
   logout: Scalars['String'];
+  feed?: Maybe<Array<Maybe<Post>>>;
+  userById: User;
+};
+
+
+export type QueryUserByIdArgs = {
+  id: Scalars['ID'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   createUser?: Maybe<Scalars['Boolean']>;
   login?: Maybe<Scalars['Boolean']>;
+  createPost?: Maybe<Scalars['Boolean']>;
 };
 
 
 export type MutationCreateUserArgs = {
-  userInfo?: Maybe<UserInfo>;
+  userInfo: UserInfo;
 };
 
 
 export type MutationLoginArgs = {
-  loginData?: Maybe<LoginData>;
+  loginData: LoginData;
+};
+
+
+export type MutationCreatePostArgs = {
+  body: Scalars['String'];
 };
 
 export type UserInfo = {
@@ -62,6 +87,16 @@ export enum CacheControlScope {
 }
 
 
+export type CreatePostMutationVariables = Exact<{
+  body: Scalars['String'];
+}>;
+
+
+export type CreatePostMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'createPost'>
+);
+
 export type SignupMutationVariables = Exact<{
   userInfo: UserInfo;
 }>;
@@ -70,6 +105,21 @@ export type SignupMutationVariables = Exact<{
 export type SignupMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'createUser'>
+);
+
+export type FeedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FeedQuery = (
+  { __typename?: 'Query' }
+  & { feed?: Maybe<Array<Maybe<(
+    { __typename?: 'Post' }
+    & Pick<Post, 'body'>
+    & { author: (
+      { __typename?: 'Author' }
+      & Pick<Author, 'userId' | 'username'>
+    ) }
+  )>>> }
 );
 
 export type LoginMutationVariables = Exact<{
@@ -82,18 +132,50 @@ export type LoginMutation = (
   & Pick<Mutation, 'login'>
 );
 
-export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type UserByIdQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
 
 
-export type UsersQuery = (
+export type UserByIdQuery = (
   { __typename?: 'Query' }
-  & { users?: Maybe<Array<Maybe<(
+  & { userById: (
     { __typename?: 'User' }
-    & Pick<User, 'username' | '_id'>
-  )>>> }
+    & Pick<User, 'username'>
+  ) }
 );
 
 
+export const CreatePostDocument = gql`
+    mutation createPost($body: String!) {
+  createPost(body: $body)
+}
+    `;
+export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, CreatePostMutationVariables>;
+
+/**
+ * __useCreatePostMutation__
+ *
+ * To run a mutation, you first call `useCreatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPostMutation, { data, loading, error }] = useCreatePostMutation({
+ *   variables: {
+ *      body: // value for 'body'
+ *   },
+ * });
+ */
+export function useCreatePostMutation(baseOptions?: Apollo.MutationHookOptions<CreatePostMutation, CreatePostMutationVariables>) {
+        return Apollo.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, baseOptions);
+      }
+export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
+export type CreatePostMutationResult = Apollo.MutationResult<CreatePostMutation>;
+export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
 export const SignupDocument = gql`
     mutation signup($userInfo: UserInfo!) {
   createUser(userInfo: $userInfo)
@@ -124,6 +206,42 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const FeedDocument = gql`
+    query feed {
+  feed {
+    body
+    author {
+      userId
+      username
+    }
+  }
+}
+    `;
+
+/**
+ * __useFeedQuery__
+ *
+ * To run a query within a React component, call `useFeedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFeedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFeedQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFeedQuery(baseOptions?: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables>) {
+        return Apollo.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, baseOptions);
+      }
+export function useFeedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FeedQuery, FeedQueryVariables>) {
+          return Apollo.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, baseOptions);
+        }
+export type FeedQueryHookResult = ReturnType<typeof useFeedQuery>;
+export type FeedLazyQueryHookResult = ReturnType<typeof useFeedLazyQuery>;
+export type FeedQueryResult = Apollo.QueryResult<FeedQuery, FeedQueryVariables>;
 export const LoginDocument = gql`
     mutation login($loginData: LoginData!) {
   login(loginData: $loginData)
@@ -154,36 +272,36 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
-export const UsersDocument = gql`
-    query users {
-  users {
+export const UserByIdDocument = gql`
+    query userById($id: ID!) {
+  userById(id: $id) {
     username
-    _id
   }
 }
     `;
 
 /**
- * __useUsersQuery__
+ * __useUserByIdQuery__
  *
- * To run a query within a React component, call `useUsersQuery` and pass it any options that fit your needs.
- * When your component renders, `useUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useUserByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useUsersQuery({
+ * const { data, loading, error } = useUserByIdQuery({
  *   variables: {
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useUsersQuery(baseOptions?: Apollo.QueryHookOptions<UsersQuery, UsersQueryVariables>) {
-        return Apollo.useQuery<UsersQuery, UsersQueryVariables>(UsersDocument, baseOptions);
+export function useUserByIdQuery(baseOptions: Apollo.QueryHookOptions<UserByIdQuery, UserByIdQueryVariables>) {
+        return Apollo.useQuery<UserByIdQuery, UserByIdQueryVariables>(UserByIdDocument, baseOptions);
       }
-export function useUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>) {
-          return Apollo.useLazyQuery<UsersQuery, UsersQueryVariables>(UsersDocument, baseOptions);
+export function useUserByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserByIdQuery, UserByIdQueryVariables>) {
+          return Apollo.useLazyQuery<UserByIdQuery, UserByIdQueryVariables>(UserByIdDocument, baseOptions);
         }
-export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
-export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
-export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariables>;
+export type UserByIdQueryHookResult = ReturnType<typeof useUserByIdQuery>;
+export type UserByIdLazyQueryHookResult = ReturnType<typeof useUserByIdLazyQuery>;
+export type UserByIdQueryResult = Apollo.QueryResult<UserByIdQuery, UserByIdQueryVariables>;

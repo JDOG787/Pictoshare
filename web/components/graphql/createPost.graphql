@@ -1,0 +1,3 @@
+mutation createPost($body: String!) {
+    createPost(body: $body)
+}

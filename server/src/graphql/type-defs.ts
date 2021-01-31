@@ -5,11 +5,23 @@ export default gql`
         username: String!
         _id: ID!
     }
+
+    type Author {
+        userId: String!
+        username: String!
+    }
+
+    type Post {
+        body: String!
+        author: Author!
+    }
         
     type Query {
         users: [User]
         currentUser: User
         logout: String!
+        feed: [Post]
+        userById(id: ID!): User!
     }
 
     type Mutation {

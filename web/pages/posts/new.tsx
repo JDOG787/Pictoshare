@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import styles from '../../styles/NewPost.module.css';
 import Layout from '../../components/Layout';
+import { useCreatePostMutation } from '../../components/generated/graphql';
+import { useRouter } from 'next/router';
 
 const NewPost: React.FC = () => {
     const [body, setBody] = useState("");
+    const [createPost] = useCreatePostMutation();
+    const router = useRouter();
 
     function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log(body)
+        createPost({
+            variables: {
+                body
+            }
+        })
+        router.push("/feed")
     }
 
     return (

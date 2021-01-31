@@ -27,7 +27,7 @@ const Login: React.FC<Props> = () => {
       }
     })
     console.log(res)
-    router.push("/users");
+    router.push("/feed");
   }
 
   return (

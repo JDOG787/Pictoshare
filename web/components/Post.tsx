@@ -16,10 +16,10 @@ const Post: React.FC<Props> = (props) => {
                 </div>
                 <span className={styles.authorUsername}>{props.author}</span>
             </div>
-            <p className={styles.body}>
+            <div className={styles.body}>
                 {props.body}
                 <div className={styles.readMore}>Read More</div>
-            </p>
+            </div>
             <div>
                 <img className={styles.postImage} src={props.image}/>
             </div>
