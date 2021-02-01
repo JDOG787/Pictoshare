@@ -4,6 +4,8 @@ import { useSignupMutation } from '../components/generated/graphql';
 import React from 'react';
 import Layout from '../components/Layout';
 import styles from '../styles/Auth.module.css';
+import { useRouter } from 'next/router';
+import Error from '../components/Error';
 
 interface Props {}
 
@@ -14,20 +16,26 @@ const Signup: React.FC<Props> = () => {
     password: ""
   });
   const [signup] = useSignupMutation();
+  const [error, setError] = useState("");
+  const router = useRouter()
   
 
   async function onSubmit(e: Event) {
     e.preventDefault()
-    const res = await signup({
-      variables: {
-        userInfo: {
-          username: form.username,
-          email: form.email,
-          password: form.password
-        }
-      }
-    })
-    console.log(res.data.createUser)
+    try {
+      const res = await signup({
+        variables: {
+          userInfo: {
+            username: form.username,
+            email: form.email,
+            password: form.password
+          }
+        }  
+      })
+      router.push("/feed");
+    } catch(e) {
+      setError(e.message)
+    }
   }
 
   return (
@@ -36,6 +44,7 @@ const Signup: React.FC<Props> = () => {
       <img className={styles.logo} src="/images/pictoshare-logo.png"/>
       <div className={styles.signupCard}>
         <h1 className={styles.header}>Signup!</h1>
+        <Error message={error}/>
         <form onSubmit={(e) => onSubmit(e)}>
         <div className={styles.feild}>
             <label className={styles.label} htmlFor="usernmae">Username</label>

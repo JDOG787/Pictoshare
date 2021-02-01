@@ -4,6 +4,7 @@ import { useLoginMutation } from '../components/generated/graphql';
 import Layout from '../components/Layout';
 import styles from '../styles/Auth.module.css';
 import {useRouter} from 'next/router';
+import Error from '../components/Error';
 
 interface Props {}
 
@@ -14,20 +15,24 @@ const Login: React.FC<Props> = () => {
   });
   const [login] = useLoginMutation();
   const router = useRouter();
+  const [error, setError] = useState("")
 
 
   async function onSubmit(e: Event) {
     e.preventDefault();
-    const res = await login({
-      variables: {
-        loginData: {
-          email: form.email,
-          password: form.password
-        }
-      }
-    })
-    console.log(res)
-    router.push("/feed");
+    try {
+      const res = await login({
+        variables: {
+          loginData: {
+            email: form.email,
+            password: form.password
+          }
+        }  
+      })
+      router.push("/feed");
+    } catch(e) {
+      setError(e.message)
+    }
   }
 
   return (
@@ -36,6 +41,7 @@ const Login: React.FC<Props> = () => {
         <img className={styles.logo} src="/images/pictoshare-logo.png"/>
         <div className={styles.loginCard}>
           <h1 className={styles.header}>Login!</h1>
+          <Error message={error}/>
           <form onSubmit={(e) => onSubmit(e)}>
             <div className={styles.feild}>
               <label className={styles.label} htmlFor="email">Email</label>
