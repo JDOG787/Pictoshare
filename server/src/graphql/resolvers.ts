@@ -17,7 +17,7 @@ interface LoginData {
 
 export default {
     Query: {
-        users: async (p, a, { req }: Context) => {
+        users: async (_, __, { req }: Context) => {
             if (!req.isAuth) {
                 return null;
             }
