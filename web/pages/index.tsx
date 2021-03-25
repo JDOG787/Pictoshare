@@ -1,6 +1,6 @@
 import { scrypt } from 'crypto';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useLoginMutation } from '../components/generated/graphql';
 import Layout from '../components/Layout';
 import styles from '../styles/Auth.module.css';
@@ -15,7 +15,7 @@ const Login: React.FC<Props> = () => {
   const [login] = useLoginMutation()
 
 
-  async function onSubmit(e: Event) {
+  async function onSubmit(e: Event | FormEvent) {
     e.preventDefault();
     const res = await login({
       variables: {

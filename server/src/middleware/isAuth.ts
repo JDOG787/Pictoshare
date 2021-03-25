@@ -4,7 +4,7 @@ import { AuthRequest } from '../types/request';
 import { Payload } from '../types/payload';
 
 export const isAuth = (req: AuthRequest, res: Response, next: NextFunction)  => {
-    const authorization = req.headers["authorization"];
+    const authorization = req.headers.authorization;
 
     if (!authorization) {
         req.isAuth = false

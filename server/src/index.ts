@@ -10,11 +10,11 @@ import { verify } from 'jsonwebtoken'
 import User from "./mongodb/models/User";
 import { createAccessToken, createRefreshToken } from "./auth";
 import { sendRefreshToken } from "./sendRefreshToken";
-import * as cors from 'cors'
+import * as cors from 'cors';
 
 
 async function main() {
-  const app = express();
+  const app = express.default();
   const server = new ApolloServer({ 
     typeDefs, 
     resolvers,
@@ -22,11 +22,11 @@ async function main() {
   });
   await config.connect()
   
-  app.use(cors({
+  app.use(cors.default({
     credentials: true,
     origin: "http://localhost:3000"
   }))
-  app.use(cookieParser())
+  app.use(cookieParser.default())
   app.use(isAuth)
   server.applyMiddleware({ app, cors: false });
   app.post("/refresh_token", async (req, res) => {
